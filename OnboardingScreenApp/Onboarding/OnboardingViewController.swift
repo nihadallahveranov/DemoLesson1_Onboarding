@@ -55,9 +55,23 @@ final class OnboardingViewController: UIViewController {
     
     @objc
     private func didTapNextButtonAction() {
-        let c = currentPage +  1
-        let indexPath = IndexPath(item: c, section: 0)
-        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+        print("tapped next button ")
+        
+        if currentPage < list.count - 1 {
+            currentPage += 1
+            
+            collectionView.isPagingEnabled = false
+
+            let nextIndexPath = IndexPath(item: currentPage, section: 0)
+            
+            collectionView.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
+            
+            collectionView.isPagingEnabled = true
+
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            performSegue(withIdentifier: "toDashboard", sender: nil)
+        }
     }
 }
 
@@ -85,7 +99,7 @@ extension OnboardingViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("DID SCROLL")
+//        print("DID SCROLL")
     }
     
 }
